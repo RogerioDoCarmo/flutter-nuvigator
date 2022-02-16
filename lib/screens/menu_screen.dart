@@ -2,11 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:proj/components/orgs_menu_card.dart';
 import 'package:proj/components/orgs_rate_app.dart';
 import 'package:proj/core/app_colors.dart';
-import 'package:proj/screens/favorites_screen.dart';
-import 'package:proj/screens/home_screen.dart';
-import 'package:proj/screens/payment_screen.dart';
-import 'package:proj/screens/profile_screen.dart';
-import 'login_screen.dart';
 
 class MenuScreen extends StatelessWidget {
   @override

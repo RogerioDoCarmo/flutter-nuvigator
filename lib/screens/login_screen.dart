@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+
 import 'package:proj/core/app_colors.dart';
 import 'package:proj/core/app_images.dart';
-import 'package:proj/screens/home_screen.dart';
+
 import 'package:proj/screens/singup_screen.dart';
 
 class LoginScreen extends StatelessWidget {

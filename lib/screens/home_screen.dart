@@ -9,7 +9,6 @@ import 'package:proj/core/app_colors.dart';
 import 'package:proj/core/app_images.dart';
 import 'package:proj/models/producer_model.dart';
 import 'package:proj/repository/data.dart';
-import 'package:proj/screens/producer_details_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   @override

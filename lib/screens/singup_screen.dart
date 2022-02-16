@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:proj/core/app_colors.dart';
 import 'package:proj/core/app_images.dart';
-import 'login_screen.dart';
 
 class SingupScreen extends StatelessWidget {
   @override
