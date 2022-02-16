@@ -6,6 +6,7 @@ import 'package:proj/screens/favorites_screen.dart';
 
 import 'package:proj/screens/home_screen.dart';
 import 'package:proj/screens/package_details_screen.dart';
+import 'package:proj/screens/payment_screen.dart';
 import 'package:proj/screens/producer_details_screen.dart';
 import 'package:proj/screens/profile_screen.dart';
 import 'package:proj/screens/singup_screen.dart';
@@ -39,7 +40,7 @@ class RouteGenetator {
         );
       case 'payment':
         return MaterialPageRoute(
-          builder: (_) => ProfileScreen(),
+          builder: (_) => PaymentScreen(),
         );
 
       case 'producer-details':
