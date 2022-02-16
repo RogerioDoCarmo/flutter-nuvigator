@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nuvigator/next.dart';
 import 'package:proj/components/orgs_highlights_card.dart';
 import 'package:proj/components/orgs_cards_list.dart';
 import 'package:proj/components/orgs_search_bar.dart';
@@ -16,6 +17,15 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  NuvigatorState<INuRouter> nuvigator;
+
+  @override
+  void didChangeDependencies() {
+    nuvigator = Nuvigator.of(context);
+
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     final GlobalKey<ScaffoldState> _scaffoldKey =
@@ -143,16 +153,19 @@ class _HomeScreenState extends State<HomeScreen> {
     for (final producer in producers.keys) {
       final prod = Producer.fromJson(producers[producer]);
 
-      children.add(OrgsStoresCard(
-        action: () => Navigator.pushNamed(
-          context,
-          'producer-details',
-          arguments: prod,
+      children.add(
+        OrgsStoresCard(
+          action: () => nuvigator.open(
+            'producer-details',
+            parameters: {
+              "producer": prod,
+            },
+          ),
+          img: prod.logo,
+          distance: prod.distance,
+          title: prod.name,
         ),
-        img: prod.logo,
-        distance: prod.distance,
-        title: prod.name,
-      ));
+      );
 
       children.add(SizedBox(height: 10));
     }

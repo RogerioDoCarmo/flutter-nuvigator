@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nuvigator/next.dart';
 
 import 'package:proj/core/app_colors.dart';
 import 'package:proj/core/app_images.dart';
@@ -8,6 +9,8 @@ import 'package:proj/screens/singup_screen.dart';
 class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final nuvigator = Nuvigator.of(context);
+
     return SafeArea(
       child: Scaffold(
           body: SingleChildScrollView(
@@ -46,10 +49,7 @@ class LoginScreen extends StatelessWidget {
               child: ConstrainedBox(
                 constraints: BoxConstraints.tightFor(width: double.infinity),
                 child: ElevatedButton(
-                  onPressed: () => Navigator.pushNamed(
-                    context,
-                    'home',
-                  ),
+                  onPressed: () => nuvigator.open('home'),
                   style: ElevatedButton.styleFrom(
                     primary: AppColors.green, // background
                     onPrimary: Colors.white, // foreground
@@ -64,12 +64,7 @@ class LoginScreen extends StatelessWidget {
                 vertical: 10,
               ),
               child: GestureDetector(
-                onTap: () async {
-                  Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(builder: (context) => SingupScreen()),
-                      (route) => false);
-                },
+                onTap: () async => nuvigator.open('sing-up'),
                 child: Container(
                   width: double.maxFinite,
                   padding: const EdgeInsets.all(8),

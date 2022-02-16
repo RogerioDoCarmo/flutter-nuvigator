@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+
+import 'package:nuvigator/next.dart';
+
 import 'package:proj/components/orgs_drawer.dart';
 import 'package:proj/components/orgs_stores_card.dart';
+
 import 'package:proj/core/app_colors.dart';
+
 import 'package:proj/models/producer_model.dart';
+
 import 'package:proj/repository/data.dart';
 
 class FavoritesScreen extends StatelessWidget {
@@ -10,6 +16,8 @@ class FavoritesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final nuvigator = Nuvigator.of(context);
+
     return SafeArea(
       child: Scaffold(
         key: _scaffoldKey,
@@ -51,7 +59,7 @@ class FavoritesScreen extends StatelessWidget {
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height,
                   child: FutureBuilder(
-                    future: _generateProducerList(context),
+                    future: _generateProducerList(context, nuvigator),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         return Column(
@@ -73,19 +81,23 @@ class FavoritesScreen extends StatelessWidget {
     );
   }
 
-  Future _generateProducerList(BuildContext context) async {
+  Future _generateProducerList(
+      BuildContext context, NuvigatorState<INuRouter> nuvigator) async {
     List<Widget> children = [];
+
     final data = await Data.getJson();
+
     final producers = data["producers"];
 
     for (final producer in producers.keys) {
       final prod = Producer.fromJson(producers[producer]);
 
       children.add(OrgsStoresCard(
-        action: () => Navigator.pushNamed(
-          context,
+        action: () => nuvigator.open(
           'producer-details',
-          arguments: prod,
+          parameters: {
+            "producer": prod,
+          },
         ),
         img: prod.logo,
         distance: prod.distance,

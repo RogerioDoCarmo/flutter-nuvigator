@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:nuvigator/next.dart';
+
 import 'package:proj/components/orgs_packages_card.dart';
 
 import 'package:proj/core/app_colors.dart';
@@ -14,6 +16,8 @@ class ProducerDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final nuvigator = Nuvigator.of(context);
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -84,37 +88,45 @@ class ProducerDetailsScreen extends StatelessWidget {
               ),
             ),
             Expanded(
-                child: Padding(
-              padding: EdgeInsets.fromLTRB(20, 5, 20, 0),
-              child: ListView(
-                  children: _generatePackageList(context, producer.packages)),
-            )),
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(20, 5, 20, 0),
+                child: ListView(
+                  children: _generatePackageList(
+                    context,
+                    producer.packages,
+                    nuvigator,
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
     );
   }
 
-  List _generatePackageList(BuildContext context, List packages) {
+  List _generatePackageList(BuildContext context, List packages,
+      NuvigatorState<INuRouter> nuvigator) {
     List<Widget> children = [];
     for (final package in packages) {
       final pack = Package.fromJson(package);
 
-      children.add(InkWell(
-        onTap: () => Navigator.pushNamed(
-          context,
-          'package-details',
-          arguments: {
-            "package": pack,
-            "producer": producer,
-          },
+      children.add(
+        InkWell(
+          onTap: () => nuvigator.open(
+            'package-details',
+            parameters: {
+              "package": pack,
+              "producer": producer,
+            },
+          ),
+          child: OrgsPackagesCard(
+            title: pack.title,
+            price: pack.price,
+            description: pack.description,
+          ),
         ),
-        child: OrgsPackagesCard(
-          title: pack.title,
-          price: pack.price,
-          description: pack.description,
-        ),
-      ));
+      );
     }
 
     return children;
