@@ -12,65 +12,65 @@ class FavoritesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _scaffoldKey,
-      drawer: OrgsDrawer(),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.fromLTRB(20, 50, 20, 0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Produtores favoritos',
-                    style: TextStyle(
-                        fontSize: 26,
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.darkGrey
+    return SafeArea(
+      child: Scaffold(
+        key: _scaffoldKey,
+        drawer: OrgsDrawer(),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(20, 50, 20, 0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Produtores favoritos',
+                      style: TextStyle(
+                          fontSize: 26,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.darkGrey),
                     ),
-                  ),
-                  IconButton(
-                    color: Colors.transparent,
-                    icon: Icon(Icons.menu, color: AppColors.green),
-                    onPressed: () => _scaffoldKey.currentState.openDrawer(),
-                  ),
-                ],
-              ),
-              SizedBox(height: 10),
-              Text(
-                'Produtores que você favoritou',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                  color: Colors.grey,
+                    IconButton(
+                      color: Colors.transparent,
+                      icon: Icon(Icons.menu, color: AppColors.green),
+                      onPressed: () => _scaffoldKey.currentState.openDrawer(),
+                    ),
+                  ],
                 ),
-              ),
-              SizedBox(height: 30),
-
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height,
-                child: FutureBuilder(
-                  future: _generateProducerList(context),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return Column(
-                        children: snapshot.data,
-                      );
-                    } else {
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
-                  },
+                SizedBox(height: 10),
+                Text(
+                  'Produtores que você favoritou',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.grey,
+                  ),
                 ),
-              )
+                SizedBox(height: 30),
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height,
+                  child: FutureBuilder(
+                    future: _generateProducerList(context),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return Column(
+                          children: snapshot.data,
+                        );
+                      } else {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                    },
+                  ),
+                )
               ],
             ),
           ),
+        ),
       ),
     );
   }
@@ -80,14 +80,14 @@ class FavoritesScreen extends StatelessWidget {
     final data = await Data.getJson();
     final producers = data["producers"];
 
-    for(final producer in producers.keys) {
-
+    for (final producer in producers.keys) {
       final prod = Producer.fromJson(producers[producer]);
 
       children.add(OrgsStoresCard(
-        action: () => Navigator.push(
+        action: () => Navigator.pushNamed(
           context,
-          MaterialPageRoute(builder: (context) => ProducerDetailsScreen(producer: prod)),
+          'producer-details',
+          arguments: prod,
         ),
         img: prod.logo,
         distance: prod.distance,
