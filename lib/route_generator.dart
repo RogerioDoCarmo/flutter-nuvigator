@@ -54,11 +54,11 @@ class RouteGenetator {
 
         return _errorRoute();
       case 'package-details':
-        if (args is Package) {
+        if (args is Map) {
           return MaterialPageRoute(
             builder: (_) => PackageDetailsScreen(
-              package: args,
-              producer: null, //FIXME
+              package: args["package"],
+              producer: args["producer"],
             ),
           );
         }
@@ -71,13 +71,15 @@ class RouteGenetator {
 
   static Route<dynamic> _errorRoute() {
     return MaterialPageRoute(builder: (_) {
-      return Scaffold(
-        appBar: AppBar(
-          backgroundColor: AppColors.green,
-          title: Text('Erro'),
-        ),
-        body: Center(
-          child: Text('ERRO, rota não encontrada!'),
+      return SafeArea(
+        child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: AppColors.green,
+            title: Text('Erro'),
+          ),
+          body: Center(
+            child: Text('ERRO, rota não encontrada!'),
+          ),
         ),
       );
     });
